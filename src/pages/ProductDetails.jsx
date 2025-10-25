@@ -19,6 +19,7 @@ import {
 import { useCart } from '../context/CartContextEnhanced';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS } from '../config/api';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -40,7 +41,7 @@ const ProductDetails = () => {
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products/${id}`);
+      const response = await axios.get(buildApiUrl(API_ENDPOINTS.PRODUCT_BY_ID(id)));
       if (response.data.success) {
         setProduct(response.data.data.product);
       }
@@ -115,7 +116,7 @@ const ProductDetails = () => {
 
   const fetchRelatedProducts = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products?category=Cement & Concrete&limit=4`);
+      const response = await axios.get(buildApiUrl(`${API_ENDPOINTS.PRODUCTS}?category=Cement & Concrete&limit=4`));
       if (response.data.success) {
         setRelatedProducts(response.data.data.products || []);
       }

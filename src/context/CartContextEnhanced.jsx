@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS, getApiConfig } from '../config/api';
 
 const CartContext = createContext();
 
@@ -39,12 +40,8 @@ export const CartProvider = ({ children }) => {
       setLoading(true);
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/cart`,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+        buildApiUrl(API_ENDPOINTS.CUSTOMER_CART),
+        getApiConfig(token)
       );
 
       if (response.data.success) {
@@ -92,13 +89,9 @@ export const CartProvider = ({ children }) => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/cart`,
+        buildApiUrl(API_ENDPOINTS.CUSTOMER_CART),
         { cart: cartData },
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+        getApiConfig(token)
       );
     } catch (error) {
       console.error('Error saving cart to database:', error);

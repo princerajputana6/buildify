@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS, getApiConfig } from '../config/api';
 
 const AuthContext = createContext();
 
@@ -69,31 +70,33 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/login`, {
+      const response = await axios.post(buildApiUrl(API_ENDPOINTS.LOGIN), {
         email,
         password
       });
 
       if (response.data.success) {
-        const { user, token } = response.data.data;
-        setUser(user);
-        setToken(token);
+        const { token, user } = response.data.data;
         localStorage.setItem('token', token);
-        return { success: true, user };
+        localStorage.setItem('user', JSON.stringify(user));
+        setUser(user);
+        setIsAuthenticated(true);
+        return { success: true };
       } else {
         return { success: false, message: response.data.message };
       }
     } catch (error) {
+      console.error('Login error:', error);
       return { 
         success: false, 
-        message: error.response?.data?.message || 'Login failed' 
+        message: error.response?.data?.message || 'Login failed. Please try again.' 
       };
     }
   };
 
   const register = async (userData) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/register`, userData);
+      const response = await axios.post(buildApiUrl('/api/auth/register'), userData);
 
       if (response.data.success) {
         const { user, token } = response.data.data;
@@ -122,7 +125,7 @@ export const AuthProvider = ({ children }) => {
 
   const otpLogin = async (phone, otp) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/customer/verify-otp`, {
+      const response = await axios.post(buildApiUrl(API_ENDPOINTS.VERIFY_OTP), {
         phone,
         otp
       });
@@ -151,7 +154,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (updates) => {
     try {
-      const response = await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/profile`, updates);
+      const response = await axios.put(buildApiUrl(API_ENDPOINTS.CUSTOMER_PROFILE), updates);
 
       if (response.data.success) {
         setUser(response.data.data.user);
@@ -169,7 +172,7 @@ export const AuthProvider = ({ children }) => {
 
   const addToCart = async (productId, quantity = 1) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/cart`, {
+      const response = await axios.post(buildApiUrl(API_ENDPOINTS.CUSTOMER_CART), {
         productId,
         quantity
       });
@@ -194,7 +197,7 @@ export const AuthProvider = ({ children }) => {
 
   const removeFromCart = async (productId) => {
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/cart/${productId}`);
+      const response = await axios.delete(buildApiUrl(`${API_ENDPOINTS.CUSTOMER_CART}/${productId}`));
 
       if (response.data.success) {
         setUser(prev => ({
@@ -215,7 +218,7 @@ export const AuthProvider = ({ children }) => {
 
   const addToWishlist = async (productId) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/wishlist`, {
+      const response = await axios.post(buildApiUrl(API_ENDPOINTS.CUSTOMER_WISHLIST), {
         productId
       });
 
@@ -238,7 +241,7 @@ export const AuthProvider = ({ children }) => {
 
   const removeFromWishlist = async (productId) => {
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/wishlist/${productId}`);
+      const response = await axios.delete(buildApiUrl(`${API_ENDPOINTS.CUSTOMER_WISHLIST}/${productId}`));
 
       if (response.data.success) {
         setUser(prev => ({

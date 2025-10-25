@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Phone, ArrowRight, AlertCircle, CheckCircle, Timer } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { buildApiUrl, API_ENDPOINTS } from '../config/api';
 
 const OTPLogin = () => {
   const navigate = useNavigate();
@@ -59,12 +60,12 @@ const OTPLogin = () => {
     setSuccess('');
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/customer/send-otp`, {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.SEND_OTP), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ phone: `+91${formData.phone}` }),
+        body: JSON.stringify({ phone: formData.phone }),
       });
 
       const data = await response.json();

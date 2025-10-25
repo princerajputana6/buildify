@@ -4,6 +4,7 @@ import { ArrowRight, Star, Truck, Shield, Phone, ShoppingCart, Heart, Search, Tr
 import { useCart } from '../context/CartContextEnhanced';
 import HeroSlider from '../components/home/HeroSlider';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS } from '../config/api';
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -19,8 +20,8 @@ const Home = () => {
     try {
       // Fetch featured products and categories
       const [productsRes, categoriesRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products?featured=true&limit=4`),
-        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/categories?limit=8`)
+        axios.get(buildApiUrl(`${API_ENDPOINTS.PRODUCTS}?featured=true&limit=4`)),
+        axios.get(buildApiUrl(`${API_ENDPOINTS.CATEGORIES}?limit=8`))
       ]);
 
       if (productsRes.data.success) {

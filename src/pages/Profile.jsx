@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { User, Phone, Mail, MapPin, Plus, Edit2, Trash2, Home, Building, MapIcon, AlertCircle, CheckCircle, Save, X } from 'lucide-react';
+import { User, MapPin, Phone, Mail, Edit2, Save, X, Plus, Trash2, Home, Building } from 'lucide-react';
+import { buildApiUrl, API_ENDPOINTS, getApiConfig } from '../config/api';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
@@ -44,7 +45,7 @@ const Profile = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/profile`, {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.CUSTOMER_PROFILE), {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -96,7 +97,7 @@ const Profile = () => {
   const updateProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/profile`, {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.CUSTOMER_PROFILE), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +123,7 @@ const Profile = () => {
   const addAddress = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/addresses`, {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.CUSTOMER_ADDRESSES), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,7 +152,7 @@ const Profile = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/addresses/${addressId}`, {
+      const response = await fetch(buildApiUrl(`${API_ENDPOINTS.CUSTOMER_ADDRESSES}/${addressId}`), {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

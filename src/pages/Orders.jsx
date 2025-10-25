@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { 
   Package, 
-  Truck, 
-  CheckCircle, 
   Clock, 
-  X, 
+  CheckCircle, 
+  XCircle, 
   Eye, 
+  ArrowLeft,
   RotateCcw, 
   Filter,
   Search,
@@ -20,7 +19,9 @@ import {
   AlertCircle,
   ShoppingBag
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS, getApiConfig } from '../config/api';
 
 const Orders = () => {
   const navigate = useNavigate();
@@ -36,12 +37,8 @@ const Orders = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders`,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+        buildApiUrl(API_ENDPOINTS.ORDERS),
+        getApiConfig()
       );
       if (response.data.success) {
         setOrders(response.data.data.orders || []);

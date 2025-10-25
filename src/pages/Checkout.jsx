@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, CreditCard, Truck, Shield, ArrowLeft, Smartphone, Banknote, CheckCircle, Plus, Home, Building, MapIcon } from 'lucide-react';
-import { useCart } from '../context/CartContextEnhanced';
 import { useAuth } from '../context/AuthContext';
-// import OrderDebugger from '../components/OrderDebugger'; // Removed after debugging
+import { useCart } from '../context/CartContextEnhanced';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS, getApiConfig, RAZORPAY_CONFIG } from '../config/api';
+import { MapPin, CreditCard, Truck, Shield, ArrowLeft, Smartphone, Banknote, CheckCircle, Plus, Home, Building, MapIcon } from 'lucide-react';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -47,12 +47,8 @@ const Checkout = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/addresses`,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+        buildApiUrl(API_ENDPOINTS.CUSTOMER_ADDRESSES),
+        getApiConfig()
       );
 
       if (response.data.success) {
@@ -90,14 +86,9 @@ const Checkout = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/addresses`,
+        buildApiUrl(API_ENDPOINTS.CUSTOMER_ADDRESSES),
         newAddressData,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
+        getApiConfig()
       );
 
       if (response.data.success) {
@@ -162,96 +153,30 @@ const Checkout = () => {
 
   const handleOnlinePayment = async (orderData) => {
     try {
-      const paymentGateway = import.meta.env.VITE_PAYMENT_GATEWAY || 'razorpay';
-      console.log('Creating payment order with gateway:', paymentGateway);
+      console.log('Creating Razorpay payment order...');
       
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/payments/create-order`,
+        buildApiUrl(API_ENDPOINTS.PAYMENT_CREATE_ORDER),
         {
           amount: finalTotal,
           currency: 'INR',
           receipt: `order_${Date.now()}`,
           orderData: orderData
         },
-        {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json'
-          }
-        }
+        getApiConfig()
       );
 
       if (response.data.success) {
-        const { gateway } = response.data;
-        
-        if (gateway === 'payu') {
-          // Handle PayU payment
-          await handlePayUPayment(response.data.data, orderData);
-        } else {
-          // Handle Razorpay payment (fallback)
-          await handleRazorpayPayment(response.data.data, orderData);
-        }
+        await handleRazorpayPayment(response.data.data, orderData);
       } else {
         throw new Error(response.data.message || 'Failed to create payment order');
       }
     } catch (error) {
-      console.error('Online payment error:', error);
+      console.error('Payment creation error:', error);
       throw error;
     }
   };
 
-  const handlePayUPayment = async (paymentData, orderData) => {
-    try {
-      console.log('Initiating PayU payment...');
-      
-      // First create the order in our database
-      const orderResponse = await axios.post(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/orders`,
-        orderData,
-        {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-
-      if (orderResponse.data.success) {
-        const orderId = orderResponse.data.data._id;
-        
-        // Update PayU parameters with actual order ID
-        const paymentParams = {
-          ...paymentData.paymentParams,
-          udf1: orderId // Store actual order ID
-        };
-
-        // Create and submit PayU form
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = paymentParams.action;
-        form.style.display = 'none';
-
-        // Add all PayU parameters as hidden inputs
-        Object.keys(paymentParams).forEach(key => {
-          if (key !== 'action') {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = key;
-            input.value = paymentParams[key];
-            form.appendChild(input);
-          }
-        });
-
-        document.body.appendChild(form);
-        form.submit();
-      } else {
-        throw new Error(orderResponse.data.message || 'Failed to create order');
-      }
-    } catch (error) {
-      console.error('PayU payment error:', error);
-      throw error;
-    }
-  };
 
   const handleRazorpayPayment = async (paymentData, orderData) => {
     try {
@@ -260,31 +185,27 @@ const Checkout = () => {
       const { razorpayOrderId, amount, currency } = paymentData;
       
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        key: RAZORPAY_CONFIG.key,
         amount: amount,
         currency: currency,
-        name: 'Buildify',
-        description: 'Construction Materials Order',
+        name: RAZORPAY_CONFIG.name,
+        description: RAZORPAY_CONFIG.description,
         order_id: razorpayOrderId,
+        theme: RAZORPAY_CONFIG.theme,
         handler: async function (response) {
           try {
             console.log('Razorpay payment successful:', response);
             
             // Verify payment and create order
             const verifyResponse = await axios.post(
-              `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/payments/verify-payment`,
+              buildApiUrl(API_ENDPOINTS.PAYMENT_VERIFY),
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
                 orderData: orderData
               },
-              {
-                headers: {
-                  'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                  'Content-Type': 'application/json'
-                }
-              }
+              getApiConfig()
             );
 
             if (verifyResponse.data.success) {
@@ -374,17 +295,12 @@ const Checkout = () => {
 
       // Handle different payment methods
       if (formData.paymentMethod === 'razorpay' || formData.paymentMethod === 'upi' || formData.paymentMethod === 'online') {
-        // For PayU, we don't need to load external scripts
-        const paymentGateway = import.meta.env.VITE_PAYMENT_GATEWAY || 'razorpay';
-        
-        if (paymentGateway === 'razorpay') {
-          // Load Razorpay script if using Razorpay
-          const scriptLoaded = await loadRazorpayScript();
-          if (!scriptLoaded) {
-            alert('Failed to load payment gateway. Please try again.');
-            setLoading(false);
-            return;
-          }
+        // Load Razorpay script
+        const scriptLoaded = await loadRazorpayScript();
+        if (!scriptLoaded) {
+          alert('Failed to load payment gateway. Please try again.');
+          setLoading(false);
+          return;
         }
 
         await handleOnlinePayment(orderData);
@@ -392,14 +308,9 @@ const Checkout = () => {
         // Cash on Delivery - direct order placement
         const token = localStorage.getItem('token');
         const response = await axios.post(
-          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/orders`,
+          buildApiUrl(API_ENDPOINTS.CUSTOMER_ORDERS),
           orderData,
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            }
-          }
+          getApiConfig()
         );
 
         if (response.data.success) {

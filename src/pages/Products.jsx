@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Search, Filter, Grid, List, ShoppingCart, Heart, Star } from 'lucide-react';
 import { useCart } from '../context/CartContextEnhanced';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS } from '../config/api';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -23,7 +24,7 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`);
+      const response = await axios.get(buildApiUrl(API_ENDPOINTS.PRODUCTS));
       if (response.data.success) {
         setProducts(response.data.data.products || []);
       }
@@ -89,7 +90,7 @@ const Products = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/categories`);
+      const response = await axios.get(buildApiUrl(API_ENDPOINTS.CATEGORIES));
       if (response.data.success) {
         setCategories(response.data.data.categories || []);
       }
