@@ -73,7 +73,9 @@ export const API_ENDPOINTS = {
 
 // Helper function to build full URL
 export const buildApiUrl = (endpoint) => {
-  return `${API_CONFIG.baseURL}${endpoint}`;
+  const baseUrl = API_CONFIG.baseURL.replace(/\/$/, ''); // Remove trailing slash
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`; // Ensure leading slash
+  return `${baseUrl}${cleanEndpoint}`;
 };
 
 // Helper function to get API config with auth token
