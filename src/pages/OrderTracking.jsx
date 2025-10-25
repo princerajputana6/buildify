@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import {
-  Package,
-  Truck,
-  CheckCircle,
-  Clock,
-  XCircle,
-  MapPin,
-  Phone,
-  Mail,
-  Calendar,
-  ArrowLeft,
-  Download,
-  Star
-} from 'lucide-react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Package, Truck, CheckCircle, Clock, MapPin, Phone, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS } from '../config/api';
 
 const OrderTracking = () => {
   const { orderNumber } = useParams();
@@ -36,7 +24,7 @@ const OrderTracking = () => {
       
       // First try to get order by order number
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders`,
+        buildApiUrl(API_ENDPOINTS.ORDERS),
         {
           headers: {
             'Authorization': `Bearer ${token}`

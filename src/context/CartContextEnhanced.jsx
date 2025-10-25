@@ -136,7 +136,7 @@ export const CartProvider = ({ children }) => {
       // Get current database cart
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/cart`,
+        buildApiUrl(API_ENDPOINTS.CUSTOMER_CART),
         {
           headers: {
             'Authorization': `Bearer ${token}`

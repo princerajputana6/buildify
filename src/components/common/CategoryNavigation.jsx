@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS } from '../../config/api';
 
 const CategoryNavigation = ({ mobile = false, onLinkClick }) => {
   const [categories, setCategories] = useState([]);
@@ -13,7 +14,7 @@ const CategoryNavigation = ({ mobile = false, onLinkClick }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/categories`);
+      const response = await axios.get(buildApiUrl(API_ENDPOINTS.CATEGORIES));
       if (response.data.success) {
         setCategories(response.data.data.categories || []);
       }

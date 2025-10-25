@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { CheckCircle, Package, Truck, Clock, ArrowRight, ShoppingBag, Home } from 'lucide-react';
+import { CheckCircle, Package, Truck, Clock, ArrowRight, ShoppingBag, Home, Calendar, MapPin, Phone, Mail } from 'lucide-react';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS } from '../config/api';
 
 const OrderSuccess = () => {
   const { orderId } = useParams();
@@ -17,7 +18,7 @@ const OrderSuccess = () => {
   const fetchOrderDetails = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${orderId}`,
+        buildApiUrl(API_ENDPOINTS.ORDER_BY_ID(orderId)),
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`

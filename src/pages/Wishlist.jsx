@@ -12,6 +12,7 @@ import {
   Search
 } from 'lucide-react';
 import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS } from '../config/api';
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -27,7 +28,7 @@ const Wishlist = () => {
       setLoading(true);
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/wishlist`,
+        buildApiUrl(API_ENDPOINTS.CUSTOMER_WISHLIST),
         {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -50,7 +51,7 @@ const Wishlist = () => {
       setRemoving(productId);
       const token = localStorage.getItem('token');
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/wishlist/${productId}`,
+        buildApiUrl(`${API_ENDPOINTS.CUSTOMER_WISHLIST}/${productId}`),
         {
           headers: {
             'Authorization': `Bearer ${token}`

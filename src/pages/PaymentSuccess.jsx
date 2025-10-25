@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import { CheckCircle, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
+import { CheckCircle, Package, ArrowRight, Home } from 'lucide-react';
+import axios from 'axios';
+import { buildApiUrl, API_ENDPOINTS } from '../config/api';
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
@@ -21,7 +23,7 @@ const PaymentSuccess = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/customer/orders`,
+        buildApiUrl(API_ENDPOINTS.CUSTOMER_ORDERS),
         {
           headers: {
             'Authorization': `Bearer ${token}`
