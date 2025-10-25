@@ -17,6 +17,37 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Vendor chunks
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['lucide-react', 'react-hot-toast'],
+          'http-vendor': ['axios'],
+          
+          // Feature chunks
+          'product-pages': [
+            './src/pages/Products.jsx',
+            './src/pages/ProductDetails.jsx'
+          ],
+          'cart-checkout': [
+            './src/pages/Cart.jsx',
+            './src/pages/Checkout.jsx'
+          ],
+          'order-pages': [
+            './src/pages/Orders.jsx',
+            './src/pages/OrderSuccess.jsx',
+            './src/pages/OrderTracking.jsx'
+          ],
+          'user-pages': [
+            './src/pages/Profile.jsx',
+            './src/pages/Wishlist.jsx',
+            './src/pages/OTPLogin.jsx'
+          ]
+        }
+      }
+    },
+    chunkSizeWarningLimit: 500
   }
 })

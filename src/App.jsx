@@ -1,36 +1,42 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContextEnhanced';
 import Layout from './components/common/Layout';
 import ProtectedRoute from './components/common/ProtectedRoute';
 
-// Public pages
-import Home from './pages/Home';
-import Products from './pages/Products';
-import ProductDetails from './pages/ProductDetails';
-import OTPLogin from './pages/OTPLogin';
-import About from './pages/About';
-import Contact from './pages/Contact';
+// Loading component
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+  </div>
+);
 
-// Protected pages
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import Orders from './pages/Orders';
-import OrderSuccess from './pages/OrderSuccess';
-import OrderTracking from './pages/OrderTracking';
-import Wishlist from './pages/Wishlist';
-import Profile from './pages/Profile';
-import PaymentSuccess from './pages/PaymentSuccess';
-import PaymentFailure from './pages/PaymentFailure';
-import NotFound from './pages/NotFound';
+// Lazy load pages
+const Home = React.lazy(() => import('./pages/Home'));
+const Products = React.lazy(() => import('./pages/Products'));
+const ProductDetails = React.lazy(() => import('./pages/ProductDetails'));
+const OTPLogin = React.lazy(() => import('./pages/OTPLogin'));
+const About = React.lazy(() => import('./pages/About'));
+const Contact = React.lazy(() => import('./pages/Contact'));
+const Cart = React.lazy(() => import('./pages/Cart'));
+const Checkout = React.lazy(() => import('./pages/Checkout'));
+const Orders = React.lazy(() => import('./pages/Orders'));
+const OrderSuccess = React.lazy(() => import('./pages/OrderSuccess'));
+const OrderTracking = React.lazy(() => import('./pages/OrderTracking'));
+const Wishlist = React.lazy(() => import('./pages/Wishlist'));
+const Profile = React.lazy(() => import('./pages/Profile'));
+const PaymentSuccess = React.lazy(() => import('./pages/PaymentSuccess'));
+const PaymentFailure = React.lazy(() => import('./pages/PaymentFailure'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
         <div className="min-h-screen bg-gray-50">
-          <Routes>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
             {/* Public routes with layout */}
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
@@ -108,7 +114,8 @@ function App() {
 
             {/* 404 route */}
             <Route path="*" element={<NotFound />} />
-          </Routes>
+            </Routes>
+          </Suspense>
         </div>
       </CartProvider>
     </AuthProvider>

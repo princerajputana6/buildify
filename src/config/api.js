@@ -1,6 +1,29 @@
-// API Configuration
+// Smart API Configuration - Auto-detects environment
+const getApiBaseUrl = () => {
+  // Check if we have an environment variable first
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // Auto-detect based on current URL
+  const currentUrl = window.location.hostname;
+  
+  // If running on localhost or 127.0.0.1, use local backend
+  if (currentUrl === 'localhost' || currentUrl === '127.0.0.1') {
+    return 'http://localhost:5000';
+  }
+  
+  // If running on Cloudflare Pages (*.pages.dev), use live backend
+  if (currentUrl.includes('.pages.dev') || currentUrl.includes('buildify')) {
+    return 'https://buildify-backend.princerajputana5.workers.dev';
+  }
+  
+  // Default fallback to live backend
+  return 'https://buildify-backend.princerajputana5.workers.dev';
+};
+
 const API_CONFIG = {
-  baseURL: import.meta.env.VITE_API_URL || 'https://buildify-backend.princerajputana5.workers.dev',
+  baseURL: getApiBaseUrl(),
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'

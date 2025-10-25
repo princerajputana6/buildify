@@ -191,7 +191,6 @@ const Checkout = () => {
         name: RAZORPAY_CONFIG.name,
         description: RAZORPAY_CONFIG.description,
         order_id: razorpayOrderId,
-        theme: RAZORPAY_CONFIG.theme,
         handler: async function (response) {
           try {
             console.log('Razorpay payment successful:', response);
