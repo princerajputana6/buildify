@@ -218,7 +218,7 @@ const Orders = () => {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-900">My Orders</h1>
         <Link
-          to="/products"
+          to="/app/products"
           className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
         >
           Continue Shopping
@@ -263,7 +263,7 @@ const Orders = () => {
             }
           </p>
           <Link
-            to="/products"
+            to="/app/products"
             className="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors"
           >
             Start Shopping
@@ -389,14 +389,14 @@ const Orders = () => {
                   </div>
                   <div className="flex gap-2">
                     <button
-                      onClick={() => navigate(`/track-order/${order.orderNumber}`)}
+                      onClick={() => navigate(`/app/track-order/${order.orderNumber}`)}
                       className="inline-flex items-center gap-1 px-3 py-2 text-sm bg-primary-600 text-white rounded hover:bg-primary-700 transition-colors"
                     >
                       <Truck className="w-4 h-4" />
                       Track Order
                     </button>
                     <Link
-                      to={`/orders/${order.orderNumber}`}
+                      to={`/app/orders/${order.orderNumber}`}
                       className="inline-flex items-center gap-1 px-3 py-2 text-sm border border-primary-600 text-primary-600 rounded hover:bg-primary-50 transition-colors"
                     >
                       <Eye className="w-4 h-4" />

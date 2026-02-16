@@ -126,7 +126,7 @@ const OrderTracking = () => {
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Order Not Found</h2>
         <p className="text-gray-600 mb-6">{error || 'The order you are looking for does not exist.'}</p>
         <button
-          onClick={() => navigate('/orders')}
+          onClick={() => navigate('/app/orders')}
           className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
         >
           View All Orders
@@ -143,7 +143,7 @@ const OrderTracking = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <button
-            onClick={() => navigate('/orders')}
+            onClick={() => navigate('/app/orders')}
             className="p-2 hover:bg-gray-100 rounded-lg"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -345,7 +345,7 @@ const OrderTracking = () => {
       {/* Actions */}
       <div className="flex justify-center space-x-4">
         <button
-          onClick={() => navigate('/orders')}
+          onClick={() => navigate('/app/orders')}
           className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
         >
           Back to Orders

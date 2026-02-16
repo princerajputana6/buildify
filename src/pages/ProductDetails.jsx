@@ -153,7 +153,7 @@ const ProductDetails = () => {
       return;
     }
     handleAddToCart();
-    navigate('/checkout');
+    navigate('/app/checkout');
   };
 
   const nextImage = () => {
@@ -181,7 +181,7 @@ const ProductDetails = () => {
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h2>
         <p className="text-gray-600 mb-6">The product you're looking for doesn't exist.</p>
-        <Link to="/products" className="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors">
+        <Link to="/app/products" className="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors">
           Browse Products
         </Link>
       </div>
@@ -196,11 +196,11 @@ const ProductDetails = () => {
     <div className="max-w-7xl mx-auto space-y-8">
       {/* Breadcrumb */}
       <nav className="flex items-center space-x-2 text-sm text-gray-600">
-        <Link to="/" className="hover:text-primary-600">Home</Link>
+        <Link to="/app" className="hover:text-primary-600">Home</Link>
         <span>/</span>
-        <Link to="/products" className="hover:text-primary-600">Products</Link>
+        <Link to="/app/products" className="hover:text-primary-600">Products</Link>
         <span>/</span>
-        <Link to={`/products?category=${product.category?.name}`} className="hover:text-primary-600">
+        <Link to={`/app/products?category=${product.category?.name}`} className="hover:text-primary-600">
           {product.category?.name}
         </Link>
         <span>/</span>
@@ -554,7 +554,7 @@ const ProductDetails = () => {
             {relatedProducts.map((relatedProduct) => (
               <Link
                 key={relatedProduct._id}
-                to={`/products/${relatedProduct._id}`}
+                to={`/app/products/${relatedProduct._id}`}
                 className="bg-white rounded-xl shadow-md border hover:shadow-lg transition-shadow duration-300"
               >
                 <img

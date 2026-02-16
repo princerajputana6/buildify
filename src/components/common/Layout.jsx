@@ -34,7 +34,7 @@ const Layout = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+      navigate(`/app/products?search=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
     }
   };
@@ -42,7 +42,7 @@ const Layout = () => {
   const handleLogout = () => {
     logout();
     setIsUserMenuOpen(false);
-    navigate('/');
+    navigate('/app');
   };
 
   // Removed static navigation - now using dynamic categories
@@ -76,7 +76,7 @@ const Layout = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/app" className="flex items-center space-x-2">
               <img 
                 src={logo} 
                 alt="Buildify" 
@@ -104,7 +104,7 @@ const Layout = () => {
             <div className="flex items-center space-x-4">
               {/* Cart */}
               <Link
-                to="/cart"
+                to="/app/cart"
                 className="relative p-2 text-blue-200 hover:text-white transition-colors"
               >
                 <ShoppingCart className="w-6 h-6" />
@@ -130,7 +130,7 @@ const Layout = () => {
                     {isUserMenuOpen && (
                       <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border py-2 z-50">
                         <Link
-                          to="/profile"
+                          to="/app/profile"
                           className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50"
                           onClick={() => setIsUserMenuOpen(false)}
                         >
@@ -138,7 +138,7 @@ const Layout = () => {
                           Profile
                         </Link>
                         <Link
-                          to="/orders"
+                          to="/app/orders"
                           className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50"
                           onClick={() => setIsUserMenuOpen(false)}
                         >
@@ -146,7 +146,7 @@ const Layout = () => {
                           My Orders
                         </Link>
                         <Link
-                          to="/wishlist"
+                          to="/app/wishlist"
                           className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50"
                           onClick={() => setIsUserMenuOpen(false)}
                         >
@@ -166,7 +166,7 @@ const Layout = () => {
                   </div>
                 ) : (
                   <Link
-                    to="/otp-login"
+                    to="/app/otp-login"
                     className="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-xl border border-white/30 hover:bg-white/30 transition-all duration-300"
                   >
                     Login
@@ -248,10 +248,10 @@ const Layout = () => {
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><Link to="/products" className="text-gray-400 hover:text-white transition-colors">All Products</Link></li>
-                <li><Link to="/about" className="text-gray-400 hover:text-white transition-colors">About Us</Link></li>
-                <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
-                <li><Link to="/orders" className="text-gray-400 hover:text-white transition-colors">Track Order</Link></li>
+                <li><Link to="/app/products" className="text-gray-400 hover:text-white transition-colors">All Products</Link></li>
+                <li><Link to="/app/about" className="text-gray-400 hover:text-white transition-colors">About Us</Link></li>
+                <li><Link to="/app/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
+                <li><Link to="/app/orders" className="text-gray-400 hover:text-white transition-colors">Track Order</Link></li>
               </ul>
             </div>
 
@@ -259,10 +259,10 @@ const Layout = () => {
             <div>
               <h3 className="text-lg font-semibold mb-4">Categories</h3>
               <ul className="space-y-2">
-                <li><Link to="/products?category=Cement & Concrete" className="text-gray-400 hover:text-white transition-colors">Cement & Concrete</Link></li>
-                <li><Link to="/products?category=Steel & Iron" className="text-gray-400 hover:text-white transition-colors">Steel & Iron</Link></li>
-                <li><Link to="/products?category=Bricks & Blocks" className="text-gray-400 hover:text-white transition-colors">Bricks & Blocks</Link></li>
-                <li><Link to="/products?category=Tiles & Flooring" className="text-gray-400 hover:text-white transition-colors">Tiles & Flooring</Link></li>
+                <li><Link to="/app/products?category=Cement & Concrete" className="text-gray-400 hover:text-white transition-colors">Cement & Concrete</Link></li>
+                <li><Link to="/app/products?category=Steel & Iron" className="text-gray-400 hover:text-white transition-colors">Steel & Iron</Link></li>
+                <li><Link to="/app/products?category=Bricks & Blocks" className="text-gray-400 hover:text-white transition-colors">Bricks & Blocks</Link></li>
+                <li><Link to="/app/products?category=Tiles & Flooring" className="text-gray-400 hover:text-white transition-colors">Tiles & Flooring</Link></li>
               </ul>
             </div>
 

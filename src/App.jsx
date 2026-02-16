@@ -13,6 +13,7 @@ const LoadingSpinner = () => (
 );
 
 // Lazy load pages
+const Landing = React.lazy(() => import('./pages/Landing'));
 const Home = React.lazy(() => import('./pages/Home'));
 const Products = React.lazy(() => import('./pages/Products'));
 const ProductDetails = React.lazy(() => import('./pages/ProductDetails'));
@@ -37,8 +38,11 @@ function App() {
         <div className="min-h-screen bg-gray-50">
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
-            {/* Public routes with layout */}
-            <Route path="/" element={<Layout />}>
+            {/* Landing page */}
+            <Route path="/" element={<Landing />} />
+
+            {/* App routes with layout */}
+            <Route path="/app" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="products" element={<Products />} />
               <Route path="products/:id" element={<ProductDetails />} />

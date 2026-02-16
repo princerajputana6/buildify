@@ -138,7 +138,7 @@ const Home = () => {
             <p className="text-gray-600">Find exactly what you need for your construction project</p>
           </div>
           <Link
-            to="/products"
+            to="/app/products"
             className="text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1"
           >
             View All <ArrowRight className="w-4 h-4" />
@@ -149,7 +149,7 @@ const Home = () => {
           {categories.slice(0, 8).map((category) => (
             <Link
               key={category._id}
-              to={`/products?category=${encodeURIComponent(category.name)}`}
+              to={`/app/products?category=${encodeURIComponent(category.name)}`}
               className="group bg-white rounded-xl shadow-md border hover:shadow-lg transition-all duration-300 overflow-hidden"
             >
               <div className="aspect-square overflow-hidden">
@@ -177,7 +177,7 @@ const Home = () => {
             <p className="text-gray-600">Top-rated construction materials chosen by professionals</p>
           </div>
           <Link
-            to="/products"
+            to="/app/products"
             className="text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1"
           >
             View All <ArrowRight className="w-4 h-4" />
@@ -231,7 +231,7 @@ const Home = () => {
                 
                 <div className="flex gap-2">
                   <Link
-                    to={`/products/${product._id}`}
+                    to={`/app/products/${product._id}`}
                     className="flex-1 text-center px-3 py-2 text-sm border border-primary-600 text-primary-600 rounded hover:bg-primary-50 transition-colors"
                   >
                     View
@@ -292,13 +292,13 @@ const Home = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            to="/products"
+            to="/app/products"
             className="bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
           >
             Browse Products
           </Link>
           <Link
-            to="/contact"
+            to="/app/contact"
             className="border border-primary-600 text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
           >
             Contact Us

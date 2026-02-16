@@ -14,7 +14,7 @@ const HeroSlider = () => {
       description: "Discover high-grade cement, steel, and building materials from trusted suppliers. Get up to 25% off on bulk orders.",
       image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=600&fit=crop",
       ctaText: "Shop Now",
-      ctaLink: "/products",
+      ctaLink: "/app/products",
       offer: "Up to 25% OFF",
       bgGradient: "from-blue-900 via-blue-800 to-indigo-900"
     },
@@ -25,7 +25,7 @@ const HeroSlider = () => {
       description: "Premium quality steel rebars, TMT bars, and structural steel. Certified products with guaranteed strength and durability.",
       image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&h=600&fit=crop",
       ctaText: "Explore Steel",
-      ctaLink: "/products?category=Steel & Iron",
+      ctaLink: "/app/products?category=Steel & Iron",
       offer: "Free Delivery",
       bgGradient: "from-slate-800 via-gray-800 to-zinc-900"
     },
@@ -36,7 +36,7 @@ const HeroSlider = () => {
       description: "Beautiful ceramic, marble, and vitrified tiles for every room. Create stunning interiors with our premium collection.",
       image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop",
       ctaText: "View Collection",
-      ctaLink: "/products?category=Tiles & Flooring",
+      ctaLink: "/app/products?category=Tiles & Flooring",
       offer: "New Arrivals",
       bgGradient: "from-emerald-800 via-teal-800 to-cyan-900"
     },
@@ -47,7 +47,7 @@ const HeroSlider = () => {
       description: "From foundation to finishing - get all your construction materials delivered to your doorstep. Expert consultation included.",
       image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=600&fit=crop",
       ctaText: "Get Quote",
-      ctaLink: "/contact",
+      ctaLink: "/app/contact",
       offer: "Expert Consultation",
       bgGradient: "from-orange-600 to-red-700"
     }
@@ -149,7 +149,7 @@ const HeroSlider = () => {
                       </Link>
                       
                       <Link
-                        to="/products"
+                        to="/app/products"
                         className="inline-flex items-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105"
                       >
                         Browse All

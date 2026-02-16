@@ -88,14 +88,14 @@ const PaymentSuccess = () => {
 
           <div className="mt-6 flex flex-col sm:flex-row gap-3">
             <button
-              onClick={() => navigate('/orders')}
+              onClick={() => navigate('/app/orders')}
               className="flex-1 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors flex items-center justify-center gap-2"
             >
               View Orders
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
-              onClick={() => navigate('/products')}
+              onClick={() => navigate('/app/products')}
               className="flex-1 border border-primary-600 text-primary-600 px-4 py-2 rounded-lg hover:bg-primary-50 transition-colors"
             >
               Continue Shopping

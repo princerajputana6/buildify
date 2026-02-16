@@ -94,7 +94,7 @@ const Wishlist = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <Link
-            to="/products"
+            to="/app/products"
             className="p-2 hover:bg-gray-100 rounded-lg"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -113,7 +113,7 @@ const Wishlist = () => {
             <span>Refresh</span>
           </button>
           <Link
-            to="/products"
+            to="/app/products"
             className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
           >
             Continue Shopping
@@ -130,7 +130,7 @@ const Wishlist = () => {
             Save items you love to your wishlist and never lose track of them.
           </p>
           <Link
-            to="/products"
+            to="/app/products"
             className="inline-flex items-center space-x-2 bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors"
           >
             <Package className="w-5 h-5" />

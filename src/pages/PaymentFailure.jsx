@@ -11,7 +11,7 @@ const PaymentFailure = () => {
 
   const handleRetryPayment = () => {
     // Navigate back to checkout to retry payment
-    navigate('/checkout');
+    navigate('/app/checkout');
   };
 
   return (
@@ -67,7 +67,7 @@ const PaymentFailure = () => {
               Retry Payment
             </button>
             <button
-              onClick={() => navigate('/cart')}
+              onClick={() => navigate('/app/cart')}
               className="flex-1 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
             >
               <ArrowLeft className="w-4 h-4" />

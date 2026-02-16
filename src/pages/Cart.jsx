@@ -29,7 +29,7 @@ const Cart = () => {
             Looks like you haven't added any items to your cart yet.
           </p>
           <Link
-            to="/products"
+            to="/app/products"
             className="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -45,7 +45,7 @@ const Cart = () => {
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Shopping Cart</h1>
         <Link
-          to="/products"
+          to="/app/products"
           className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -193,7 +193,7 @@ const Cart = () => {
             </div>
 
             <Link
-              to="/checkout"
+              to="/app/checkout"
               className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg hover:bg-primary-700 transition-colors font-medium text-center block"
             >
               Proceed to Checkout
@@ -201,7 +201,7 @@ const Cart = () => {
 
             <div className="mt-4 text-center">
               <Link
-                to="/products"
+                to="/app/products"
                 className="text-primary-600 hover:text-primary-700 text-sm"
               >
                 Continue Shopping

@@ -41,11 +41,11 @@ const CategoryNavigation = ({ mobile = false, onLinkClick }) => {
     return (
       <div className="space-y-2">
         {categories.map((category) => {
-          const isActive = location.pathname === `/products?category=${category.id}`;
+          const isActive = location.pathname === `/app/products?category=${category.id}`;
           return (
             <Link
               key={category._id}
-              to={`/products?category=${category.id}`}
+              to={`/app/products?category=${category.id}`}
               className={`block px-3 py-2 rounded-lg text-base font-medium flex items-center space-x-2 ${
                 isActive
                   ? 'bg-primary-50 text-primary-600'
@@ -66,11 +66,11 @@ const CategoryNavigation = ({ mobile = false, onLinkClick }) => {
     <div className="flex items-center overflow-x-auto scrollbar-hide pb-2">
       <div className="flex items-center space-x-6 min-w-max px-2">
         {categories.map((category) => {
-          const isActive = location.pathname === `/products?category=${category.id}`;
+          const isActive = location.pathname === `/app/products?category=${category.id}`;
           return (
             <Link
               key={category._id}
-              to={`/products?category=${category.id}`}
+              to={`/app/products?category=${category.id}`}
               className={`text-sm font-medium transition-colors flex items-center space-x-1 whitespace-nowrap ${
                 isActive
                   ? 'text-white border-b-2 border-white pb-1'

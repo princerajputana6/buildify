@@ -241,7 +241,7 @@ const Checkout = () => {
         alert('Payment gateway is not configured. Please try Cash on Delivery or contact support.');
       } else if (error.response?.status === 401) {
         alert('Please login to continue with payment.');
-        navigate('/login');
+        navigate('/app/login');
       } else if (error.response?.data?.message) {
         alert(`Payment Error: ${error.response.data.message}`);
       } else {
@@ -320,7 +320,7 @@ const Checkout = () => {
           
           // Redirect to order confirmation after 3 seconds
           setTimeout(() => {
-            navigate(`/orders/${newOrderNumber}`);
+            navigate(`/app/orders/${newOrderNumber}`);
           }, 3000);
         } else {
           throw new Error(response.data.message || 'Failed to place order');
@@ -360,13 +360,13 @@ const Checkout = () => {
         </div>
         <div className="space-x-4">
           <button
-            onClick={() => navigate('/orders')}
+            onClick={() => navigate('/app/orders')}
             className="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors"
           >
             View Orders
           </button>
           <button
-            onClick={() => navigate('/products')}
+            onClick={() => navigate('/app/products')}
             className="border border-primary-600 text-primary-600 px-6 py-3 rounded-lg hover:bg-primary-50 transition-colors"
           >
             Continue Shopping
